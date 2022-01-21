@@ -60,6 +60,17 @@ Suite 一簇api，一个Suite中可以定义多个外部接口
 ```
 
 ## api Register
-如果注册一个普通api，可以调用api.Register()直接注册，uri的规则与底层http pattern一样 
+如果注册一个普通api，可以调用api.Register()直接注册，uri的规则与底层http pattern一样。  
+此处注册的api与具体的底层服务协议无关，无论是使用http 还是 fastcgi等，都可调用到注册的api。
+
 
 ## http server
+Http 的服务器逻辑，配置文件的生成及读取使用了go-config。  
+RootUri: 表示此服务所有uri的前缀，与api中注册的uri一起组合成最后匹配的uri。  
+调用http.Start()即可启动http服务。
+
+## fastcgi server
+fastcgi 服务器逻辑，配置文件的生成及读取使用了go-config。  
+调用fastcgi.Start()即可启动fastcgi服务。  
+  
+
