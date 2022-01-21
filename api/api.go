@@ -136,9 +136,9 @@ func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, write 
 	})
 }
 
-func Do404(api API) {
-	Register("/", api)
-}
+//func Do404(api API) {
+//	Register("/", api)
+//}
 
 type stopError error
 
