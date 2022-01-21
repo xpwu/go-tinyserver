@@ -1,7 +1,7 @@
 package http
 
 import (
-  config2 "github.com/xpwu/go-config/config"
+  "github.com/xpwu/go-config/configs"
   "github.com/xpwu/go-xnet/xtcp"
   "regexp"
 )
@@ -27,5 +27,5 @@ var configValue = &config{
 }
 
 func init() {
-  config2.Unmarshal(configValue)
+  configs.Unmarshal(configValue)
 }
