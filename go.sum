@@ -18,6 +18,7 @@ github.com/xpwu/go-log v0.0.0-20220120022843-2cbc01400de4/go.mod h1:qulI7g0Yyd0W
 github.com/xpwu/go-pipe v0.0.0-20220115063006-dac336d40ac5/go.mod h1:apP02ck3B5eCKc19TTQh+to4iTyeCe8aU8isMv7IuCs=
 github.com/xpwu/go-reqid v0.0.0-20220121111345-9dac6c8cd03c h1:QFtpXTpTS8HHSPyV17g2+RPwifQSjxJKW628o0i77LU=
 github.com/xpwu/go-reqid v0.0.0-20220121111345-9dac6c8cd03c/go.mod h1:VG6DraZK8fsAMskvr95aCYppalDEcKO4NnyNz6W8vO4=
+github.com/xpwu/go-x v0.0.0-20220120021151-4ac8ee529bca h1:gqxneY8YF2NH8QWb34cYgPe9fyahA30IbB4YBVtOR34=
 github.com/xpwu/go-x v0.0.0-20220120021151-4ac8ee529bca/go.mod h1:fbWlT5O1aPLdzOhKnkPFao9E3q5LjQY3GXFnzML6Xz4=
 github.com/xpwu/go-xnet v0.0.0-20220120103529-39a9b56c9cdd/go.mod h1:uyI3T+FpSSBKPHn9TIhqCRVYm8jb6WYe+qo9DuQQ7jE=
 github.com/xpwu/go-xnet v0.0.0-20220120153650-2b224b1315d3 h1:WyRC/OQok2exhGcaKrm/LuNrFu6RQGcr9PSr2MPUx7g=
