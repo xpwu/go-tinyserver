@@ -4,21 +4,21 @@ import (
   "context"
   "github.com/xpwu/go-log/log"
   "github.com/xpwu/go-log/log/level"
+  "github.com/xpwu/go-tinyserver/api"
   "github.com/xpwu/go-xnet/xhttp"
   "net"
   "net/http"
-  "regexp"
+  "path"
   "strings"
   "time"
 )
 
 func Start() {
-  for _, s := range configValue.Servers {
-    if !s.Net.Listen.On() {
-      continue
-    }
-    go runServer(s)
+  if !server.Net.Listen.On() {
+    return
   }
+
+  go runServer(server)
 }
 
 func escapeReg(str string) string {
@@ -29,7 +29,7 @@ func escapeReg(str string) string {
   return str
 }
 
-func runServer(s *server) {
+func runServer(s *serverConfig) {
   defer func() {
     if r := recover(); r != nil {
       log.Fatal(r)
@@ -40,9 +40,8 @@ func runServer(s *server) {
 
   ctx, logger := log.WithCtx(context.Background())
 
-  s.nameReg = make([]*regexp.Regexp, len(s.HostName))
-  for i, name := range s.HostName {
-    s.nameReg[i] = regexp.MustCompile(escapeReg(name))
+  for k,v := range api.AllHandlers() {
+    http.HandleFunc(path.Join("/", s.RootUri, k), v)
   }
 
   srv := &http.Server{
@@ -51,23 +50,31 @@ func runServer(s *server) {
 
       found := false
 
-      for _, reg := range s.nameReg {
-        if host == reg.FindString(host) {
+      for _, h := range s.HostName {
+        if strings.HasPrefix(host, h) {
           found = true
           break
         }
       }
+      if len(s.HostName) == 0 {
+        found = true
+      }
+
       if !found {
         goto notFound
       }
 
-      if s.RootUri != "" {
-        if !strings.HasPrefix(r.URL.Path, s.RootUri) {
-          found = false
-          goto notFound
-        }
-        r.URL.Path = strings.TrimPrefix(r.URL.Path, s.RootUri)
-      }
+      // 不把RootUri看着服务级别的权限控制，视为location的匹配
+      //if s.RootUri != "" {
+      //  p := r.URL.Path
+      //  if !path.IsAbs(p) {
+      //    p = "/" + p
+      //  }
+      //  if !strings.HasPrefix(p, s.RootUri) {
+      //    found = false
+      //    goto notFound
+      //  }
+      //}
 
     notFound:
       if !found {
@@ -76,7 +83,9 @@ func runServer(s *server) {
       }
 
       http.DefaultServeMux.ServeHTTP(w, r)
+
     }),
+
     Addr:        s.Net.Listen.String(),
     ErrorLog:    log.NewSysLog(logger, level.ERROR),
     IdleTimeout: 30 * time.Second,
@@ -102,3 +111,4 @@ func stripHostPort(h string) string {
   }
   return host
 }
+

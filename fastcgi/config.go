@@ -5,21 +5,16 @@ import (
   "github.com/xpwu/go-xnet/xtcp"
 )
 
-type config struct {
-  Servers []*server
+
+type serverConfig struct {
+  *xtcp.Net
 }
 
-type server struct {
-  Net *xtcp.Net
-}
-
-var configValue = &config{
-  Servers:[]*server{
-    {Net: xtcp.DefaultNetConfig()},
-  },
+var server = &serverConfig{
+  xtcp.DefaultNetConfig(),
 }
 
 func init() {
-  configs.Unmarshal(configValue)
+  configs.Unmarshal(server)
 }
 

@@ -21,6 +21,7 @@ github.com/xpwu/go-log v0.0.0-20220120022843-2cbc01400de4 h1:4sTgcsTDPdsGfERkNBj
 github.com/xpwu/go-log v0.0.0-20220120022843-2cbc01400de4/go.mod h1:qulI7g0Yyd0Wr5RbH5cVEZiGhJISJVgGjwy6HnQaEms=
 github.com/xpwu/go-log v0.0.0-20220121154757-1a8eef3685db h1:RYQSooe01Ki1JfeNDAB5R8jNR2LRaO0zmZocod8SiOM=
 github.com/xpwu/go-log v0.0.0-20220121154757-1a8eef3685db/go.mod h1:thZXl+ouliDHmuZ8KLz7pAnFu9errw27Vamhv1jA5xE=
+github.com/xpwu/go-pipe v0.0.0-20220115063006-dac336d40ac5 h1:htoVwOyr2IMJHtVg7axexOZDHtOt/NTFIa9nCtDmSZc=
 github.com/xpwu/go-pipe v0.0.0-20220115063006-dac336d40ac5/go.mod h1:apP02ck3B5eCKc19TTQh+to4iTyeCe8aU8isMv7IuCs=
 github.com/xpwu/go-reqid v0.0.0-20220121111345-9dac6c8cd03c h1:QFtpXTpTS8HHSPyV17g2+RPwifQSjxJKW628o0i77LU=
 github.com/xpwu/go-reqid v0.0.0-20220121111345-9dac6c8cd03c/go.mod h1:VG6DraZK8fsAMskvr95aCYppalDEcKO4NnyNz6W8vO4=
@@ -31,6 +32,7 @@ github.com/xpwu/go-xnet v0.0.0-20220120153650-2b224b1315d3 h1:WyRC/OQok2exhGcaKr
 github.com/xpwu/go-xnet v0.0.0-20220120153650-2b224b1315d3/go.mod h1:uyI3T+FpSSBKPHn9TIhqCRVYm8jb6WYe+qo9DuQQ7jE=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e h1:vcxGaoTs7kV8m5Np9uUNQin4BrLOthgV7252N8V+FwY=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20210220032951-036812b2e83c h1:5KslGYwFpkhGh+Q16bwMP3cOontH8FOep7tGV86Y7SQ=
 golang.org/x/sync v0.0.0-20210220032951-036812b2e83c/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=

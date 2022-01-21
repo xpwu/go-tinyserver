@@ -2,26 +2,31 @@ package fastcgi
 
 import (
   "context"
+  "github.com/xpwu/go-tinyserver/api"
   "github.com/xpwu/go-xnet/xtcp"
   "log"
+  "net/http"
   "net/http/fcgi"
 )
 
 func Start() {
-  for _, s := range configValue.Servers {
-    if !s.Net.Listen.On() {
-      continue
-    }
-    go runServer(s)
+
+  if !server.Net.Listen.On() {
+    return
   }
+  go runServer(server)
 }
 
-func runServer(s *server) {
+func runServer(s *serverConfig) {
   defer func() {
     if r := recover(); r != nil {
       log.Fatal(r)
     }
   }()
+
+  for k,v := range api.AllHandlers() {
+    http.HandleFunc(k, v)
+  }
 
   ln, err := xtcp.NetListen(&s.Net.Listen)
   if err != nil {

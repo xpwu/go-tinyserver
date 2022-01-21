@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/xpwu/go-config/configs"
 	"github.com/xpwu/go-log/log"
 	"github.com/xpwu/go-reqid/reqid"
 	"io/ioutil"
@@ -33,6 +32,12 @@ func defaultOptions(ctx context.Context, writer http.ResponseWriter) {
 	logger.Info("OPTIONS end")
 }
 
+var allHandlers = map[string]func(writer http.ResponseWriter, rawRequest *http.Request){}
+
+func AllHandlers() map[string]func(writer http.ResponseWriter, rawRequest *http.Request) {
+	return allHandlers
+}
+
 func Register(uri string, api API) {
   RegisterApiAndOpt(uri, api, defaultOptions)
 }
@@ -40,17 +45,10 @@ func Register(uri string, api API) {
 // api GET POST 调用的方法
 // opt OPTIONS 调用的方法
 func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, write http.ResponseWriter)) {
-	if !configs.HasRead() {
-		panic("config has not read, registering api must be after config.Read()")
-	}
-	// 由各Sever控制Hostname的访问
-	//if config.Server.ServerName != "" {
-	//  uri = config.Server.ServerName + uri
-	//}
 
 	// OPTIONS && path = * 的情况 底层已默认处理
 
-	http.HandleFunc(uri, func(writer http.ResponseWriter, rawRequest *http.Request) {
+	allHandlers[uri] = func(writer http.ResponseWriter, rawRequest *http.Request) {
 
 		ctx := rawRequest.Context()
 
@@ -133,7 +131,7 @@ func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, write 
 		}
 
 		logger.Info("end. ")
-	})
+	}
 }
 
 //func Do404(api API) {

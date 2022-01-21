@@ -3,29 +3,20 @@ package http
 import (
   "github.com/xpwu/go-config/configs"
   "github.com/xpwu/go-xnet/xtcp"
-  "regexp"
 )
 
-type config struct {
-  Servers []*server
-}
-
-type server struct {
+type serverConfig struct {
   Net      *xtcp.Net
-  HostName []string
-  RootUri  string
-  nameReg  []*regexp.Regexp
+  HostName []string `conf:",leftmost match, []: allow all host name"`
+  RootUri  string `conf:",match_uri = RootUri + api.RegisterUri"`
 }
 
-var configValue = &config{
-  Servers: []*server{
-    {
-      Net:      xtcp.DefaultNetConfig(),
-      HostName: []string{"*"},
-    },
-  },
+var server = &serverConfig{
+  Net:      xtcp.DefaultNetConfig(),
+  HostName: []string{"*"},
+  RootUri: "/",
 }
 
 func init() {
-  configs.Unmarshal(configValue)
+  configs.Unmarshal(server)
 }
