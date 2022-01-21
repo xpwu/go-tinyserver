@@ -15,9 +15,11 @@ github.com/xpwu/go-cmd v0.0.0-20220120102800-bde0777fdf99 h1:XDavYOLFtMe6/QJeG2E
 github.com/xpwu/go-cmd v0.0.0-20220120102800-bde0777fdf99/go.mod h1:hlID1UUINRJXJSSf1nAsPfLJbSNafd82ouYs0gxvsgM=
 github.com/xpwu/go-config v0.0.0-20220120022145-665ba74379f3 h1:fP10QL5nX8bemQRWIBDjdxHVo6rDxPQ8MqfyDp4I/h0=
 github.com/xpwu/go-config v0.0.0-20220120022145-665ba74379f3/go.mod h1:WcIGlQK06FsHcu0NeuQ7bB8bZFkeVvPGwrcKI2aMaFc=
+github.com/xpwu/go-config v0.0.0-20220121153622-7b6f40653b1b h1:Mvfh12zlmmdzPfMR6TTo2ZegPLyYTuM2xCBUjeAC+pg=
 github.com/xpwu/go-config v0.0.0-20220121153622-7b6f40653b1b/go.mod h1:WcIGlQK06FsHcu0NeuQ7bB8bZFkeVvPGwrcKI2aMaFc=
 github.com/xpwu/go-log v0.0.0-20220120022843-2cbc01400de4 h1:4sTgcsTDPdsGfERkNBjFxxuYiX87pLo3KTX0Cs8zmwg=
 github.com/xpwu/go-log v0.0.0-20220120022843-2cbc01400de4/go.mod h1:qulI7g0Yyd0Wr5RbH5cVEZiGhJISJVgGjwy6HnQaEms=
+github.com/xpwu/go-log v0.0.0-20220121154757-1a8eef3685db h1:RYQSooe01Ki1JfeNDAB5R8jNR2LRaO0zmZocod8SiOM=
 github.com/xpwu/go-log v0.0.0-20220121154757-1a8eef3685db/go.mod h1:thZXl+ouliDHmuZ8KLz7pAnFu9errw27Vamhv1jA5xE=
 github.com/xpwu/go-pipe v0.0.0-20220115063006-dac336d40ac5/go.mod h1:apP02ck3B5eCKc19TTQh+to4iTyeCe8aU8isMv7IuCs=
 github.com/xpwu/go-reqid v0.0.0-20220121111345-9dac6c8cd03c h1:QFtpXTpTS8HHSPyV17g2+RPwifQSjxJKW628o0i77LU=

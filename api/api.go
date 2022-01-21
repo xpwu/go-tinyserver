@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/xpwu/go-config/config"
+	"github.com/xpwu/go-config/configs"
 	"github.com/xpwu/go-log/log"
 	"github.com/xpwu/go-reqid/reqid"
 	"io/ioutil"
@@ -39,8 +39,8 @@ func Register(uri string, api API) {
 
 // api GET POST 调用的方法
 // opt OPTIONS 调用的方法
-func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, writer http.ResponseWriter)) {
-	if !config.HasRead() {
+func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, write http.ResponseWriter)) {
+	if !configs.HasRead() {
 		panic("config has not read, registering api must be after config.Read()")
 	}
 	// 由各Sever控制Hostname的访问
