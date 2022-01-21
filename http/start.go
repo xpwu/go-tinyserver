@@ -40,8 +40,10 @@ func runServer(s *serverConfig) {
 
   ctx, logger := log.WithCtx(context.Background())
 
+  serverMux := http.NewServeMux()
+
   for k,v := range api.AllHandlers() {
-    http.HandleFunc(path.Join("/", s.RootUri, k), v)
+    serverMux.HandleFunc(path.Join("/", s.RootUri, k), v)
   }
 
   srv := &http.Server{
@@ -82,7 +84,7 @@ func runServer(s *serverConfig) {
         return
       }
 
-      http.DefaultServeMux.ServeHTTP(w, r)
+      serverMux.ServeHTTP(w, r)
 
     }),
 

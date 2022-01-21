@@ -24,8 +24,10 @@ func runServer(s *serverConfig) {
     }
   }()
 
+  serverMux := http.NewServeMux()
+
   for k,v := range api.AllHandlers() {
-    http.HandleFunc(k, v)
+    serverMux.HandleFunc(k, v)
   }
 
   ln, err := xtcp.NetListen(&s.Net.Listen)
@@ -54,7 +56,7 @@ func runServer(s *serverConfig) {
     _ = ln.Close()
   }()
 
-  err = fcgi.Serve(ln, nil)
+  err = fcgi.Serve(ln, serverMux)
   if err != nil {
     panic(err)
   }
