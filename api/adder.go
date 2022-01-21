@@ -23,8 +23,6 @@ func (base *base) Process(ctx context.Context, request *Request) (response *Resp
   response = NewResponse(request)
   response.HttpStatus = http.StatusInternalServerError
 
-  ctx, _ = log.WithCtx(ctx)
-
   apiReq := reflect.New(base.requestType)
   var apiRes interface{} = &struct{}{}
 
@@ -107,7 +105,7 @@ func add(newSuite SuiteCreator, register func(uri string, api API)) {
 
     // return must be prt
     if mType.NumOut() != 1 {
-      log.Warning(errStr(method.Name, "it does have onw return value"))
+      log.Warning(errStr(method.Name, "it does not have one return value"))
       continue
     }
     returnType := mType.Out(0)
@@ -120,10 +118,11 @@ func add(newSuite SuiteCreator, register func(uri string, api API)) {
     b := &base{newSuite: newSuite, method: method,
       requestType: reqType, responseType: returnType}
 
+    // 加入'/', 表示不需要带上host一起匹配。参见 net/http/server 中对host的说明
+    register(path.Join("/", suite.MappingPreUri(), mName), b)
     // 大小写都加入
-    register(path.Join(suite.MappingPreUri(), mName), b)
     if 'A' <= mName[0] && mName[0] <= 'Z' {
-      register(path.Join(suite.MappingPreUri(), strings.ToLower(mName[0:1])+mName[1:]), b)
+      register(path.Join("/", suite.MappingPreUri(), strings.ToLower(mName[0:1])+mName[1:]), b)
     }
   }
 }

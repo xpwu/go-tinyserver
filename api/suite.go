@@ -8,7 +8,7 @@ import (
 )
 
 type SetUpper interface {
-  // request 输入参数；apiRequest 输出参数，也即时具体api的输入参数
+  // request 输入参数；apiRequest 输出参数，也即是具体api的输入参数
   SetUp(ctx context.Context, request *Request, apiRequest interface{}) bool
 }
 
@@ -41,7 +41,7 @@ Suite 一簇api，一个Suite中可以定义多个外部接口
 
 
  比如： APIGetInfo(ctx Context, request *Request1) *Response1
- 假定  URIMapper 返回的值为 /doc/
+ 假定  URIMapper 返回的值为 /doc
  生成的url为  host:port/doc/GetInfo 及  host:port/doc/getInfo;
 
  对于具体服务来说，最后的url还与具体的服务配置有关,
@@ -52,7 +52,7 @@ Suite 一簇api，一个Suite中可以定义多个外部接口
       --> api （当SetUpper为true时执行）
     --> TearDowner --- 响应数据的再次处理，需要把api.response的值序列化后放入到Response中，
                         无论SetUpper的返回值，此步都要执行
- 以上任何一步出现panic或者主动调用StopCurrentServer<Deprecated> 或者主动调用 Request.Terminate()方法后，
+ 以上任何一步出现panic或者主动调用 Request.Terminate()方法后，
  直接停止请求的处理，后续的流程都不再执行，并返回错误给请求方。
 
 
@@ -81,9 +81,7 @@ type Suite interface {
 
 type SuiteCreator func() Suite
 
-type PostJsonSetUpper struct {
-  Request *Request
-}
+type PostJsonSetUpper struct {}
 
 func (p *PostJsonSetUpper) SetUp(ctx context.Context, request *Request, apiRequest interface{}) bool {
   _,logger := log.WithCtx(ctx)
@@ -92,7 +90,7 @@ func (p *PostJsonSetUpper) SetUp(ctx context.Context, request *Request, apiReque
     logger.Error(err)
     request.Terminate(err)
   }
-  p.Request = request
+
   return true
 }
 

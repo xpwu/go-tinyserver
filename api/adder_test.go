@@ -82,7 +82,7 @@ func (s *suitT) APIgetInfo2(ctx context.Context, request *getUserInfoRequest) *g
   return &getUserInfoResponse{}
 }
 
-func getMethod(t *testing.T, newSuite NewSuite, name string) reflect.Method {
+func getMethod(t *testing.T, newSuite SuiteCreator, name string) reflect.Method {
   m, ok := reflect.TypeOf(newSuite()).MethodByName(name)
   require.Truef(t, ok, "type(%v) can not find method by name(%s)",
     reflect.TypeOf(newSuite()).Elem().Name(), name)
