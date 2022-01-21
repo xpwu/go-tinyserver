@@ -59,4 +59,7 @@ Suite 一簇api，一个Suite中可以定义多个外部接口
 
 ```
 
+## api Register
+如果注册一个普通api，可以调用api.Register()直接注册，uri的规则与底层http pattern一样 
+
 ## http server
