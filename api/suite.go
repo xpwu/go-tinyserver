@@ -81,9 +81,14 @@ type Suite interface {
 
 type SuiteCreator func() Suite
 
-type PostJsonSetUpper struct {}
+type PostJsonSetUpper struct {
+  // 供使用方拿到 raw request
+  Req *Request
+}
 
 func (p *PostJsonSetUpper) SetUp(ctx context.Context, request *Request, apiRequest interface{}) bool {
+  p.Req = request
+
   _,logger := log.WithCtx(ctx)
   err := json.Unmarshal(request.RawData, apiRequest)
   if err != nil {
@@ -94,9 +99,14 @@ func (p *PostJsonSetUpper) SetUp(ctx context.Context, request *Request, apiReque
   return true
 }
 
-type PostXmlSetUpper struct {}
+type PostXmlSetUpper struct {
+  // 供使用方拿到 raw request
+  Req *Request
+}
 
 func (p *PostXmlSetUpper) SetUp(ctx context.Context, request *Request, apiRequest interface{}) bool {
+  p.Req = request
+
   _,logger := log.WithCtx(ctx)
   err := xml.Unmarshal(request.RawData, apiRequest)
   if err != nil {
