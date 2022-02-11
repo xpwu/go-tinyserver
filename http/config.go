@@ -13,7 +13,7 @@ type serverConfig struct {
 
 var server = &serverConfig{
   Net:      xtcp.DefaultNetConfig(),
-  HostName: []string{"*"},
+  HostName: []string{},
   RootUri: "/",
 }
 
