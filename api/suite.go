@@ -148,3 +148,5 @@ func (r *RootURIMapper) MappingPreUri() string {
   return "/"
 }
 
+type EmptyResponse struct {
+}
