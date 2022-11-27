@@ -48,7 +48,7 @@ func runServer(s *serverConfig) {
     }()
   }
 
-  ln, err = xtcp.NetListenConcurrent(context.Background(), ln, s.Net.MaxConnections)
+  ln, err = xtcp.NetListenConcurrentAndName(context.Background(), ln, s.Net.MaxConnections, "fastcgi")
   if err != nil {
     panic(err)
   }
