@@ -43,13 +43,18 @@ func runServer(s *serverConfig) {
 
   serverMux := http.NewServeMux()
 
-  if s.RootUri != "" {
-    serverMux.HandleFunc("/", rootUri404(s.RootUri))
-  }
-  serverMux.HandleFunc(path.Join("/", s.RootUri, ""), _404)
-
   for k,v := range api.AllHandlers() {
     serverMux.HandleFunc(path.Join("/", s.RootUri, k), v)
+  }
+  // 404。 HandleFunc 不能对同一个pattern多次注册，所以先判断再注册
+  // 只是s.RootUri 后的url不匹配
+  rootUri := path.Join("/", s.RootUri, "")
+  if _, exist := api.AllHandlers()[rootUri]; !exist {
+    serverMux.HandleFunc(rootUri, _404)
+  }
+  // s.RootUri 就不能匹配的情况，同时要注意 s.RootUri 为空或者 / 的情况，此种情况就是前面的_404情况，不能再注册
+  if _, exist := api.AllHandlers()["/"]; rootUri != "/" && !exist {
+    serverMux.HandleFunc("/", rootUri404(s.RootUri))
   }
 
   srv := &http.Server{
