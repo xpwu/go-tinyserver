@@ -2,6 +2,7 @@ package http
 
 import (
   "context"
+  "fmt"
   "github.com/xpwu/go-log/log"
   "github.com/xpwu/go-log/log/level"
   "github.com/xpwu/go-tinyserver/api"
@@ -42,6 +43,11 @@ func runServer(s *serverConfig) {
 
   serverMux := http.NewServeMux()
 
+  if s.RootUri != "" {
+    serverMux.HandleFunc("/", rootUri404(s.RootUri))
+  }
+  serverMux.HandleFunc(path.Join("/", s.RootUri, ""), _404)
+
   for k,v := range api.AllHandlers() {
     serverMux.HandleFunc(path.Join("/", s.RootUri, k), v)
   }
@@ -62,24 +68,27 @@ func runServer(s *serverConfig) {
         found = true
       }
 
+    //  if !found {
+    //    goto notFound
+    //  }
+    //
+    //  // 不把RootUri看着服务级别的权限控制，视为location的匹配
+    //  //if s.RootUri != "" {
+    //  //  p := r.URL.Path
+    //  //  if !path.IsAbs(p) {
+    //  //    p = "/" + p
+    //  //  }
+    //  //  if !strings.HasPrefix(p, s.RootUri) {
+    //  //    found = false
+    //  //    goto notFound
+    //  //  }
+    //  //}
+    //
+    //notFound:
       if !found {
-        goto notFound
-      }
-
-      // 不把RootUri看着服务级别的权限控制，视为location的匹配
-      //if s.RootUri != "" {
-      //  p := r.URL.Path
-      //  if !path.IsAbs(p) {
-      //    p = "/" + p
-      //  }
-      //  if !strings.HasPrefix(p, s.RootUri) {
-      //    found = false
-      //    goto notFound
-      //  }
-      //}
-
-    notFound:
-      if !found {
+        _, logger := log.WithCtx(r.Context())
+        logger.Error(fmt.Sprintf("404 not found. HostName is not mattched. HostNames in config are %s, but url is %s",
+          strings.Join(s.HostName, ","), r.URL))
         http.NotFound(w, r)
         return
       }
@@ -98,6 +107,23 @@ func runServer(s *serverConfig) {
   if err != nil {
     panic(err)
   }
+}
+
+func rootUri404(rootUri string) func(writer http.ResponseWriter, rawRequest *http.Request) {
+  return func(writer http.ResponseWriter, rawRequest *http.Request) {
+    _, logger := log.WithCtx(rawRequest.Context())
+    logger.Error(fmt.Sprintf("404 not found. RootUri is not mattched. RootUri in config is %s, but url is %s",
+      rootUri, rawRequest.URL))
+
+    http.NotFound(writer, rawRequest)
+  }
+}
+
+func _404(writer http.ResponseWriter, rawRequest *http.Request) {
+  _, logger := log.WithCtx(rawRequest.Context())
+  logger.Error(fmt.Sprintf("404 not found. URI is not mattched. url is %s", rawRequest.URL))
+
+  http.NotFound(writer, rawRequest)
 }
 
 // copy from net/http/server.go:2235
