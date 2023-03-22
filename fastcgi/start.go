@@ -9,6 +9,10 @@ import (
   "net/http/fcgi"
 )
 
+/**
+  必须先通过Add方法或者Register方法注册API，再启动服务
+*/
+
 func Start() {
 
   if !server.Net.Listen.On() {
@@ -26,7 +30,7 @@ func runServer(s *serverConfig) {
 
   serverMux := http.NewServeMux()
 
-  for k,v := range api.AllHandlers() {
+  for k, v := range api.AllHandlers() {
     serverMux.HandleFunc(k, v)
   }
 

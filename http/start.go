@@ -14,6 +14,10 @@ import (
   "time"
 )
 
+/**
+  必须先通过Add方法或者Register方法注册API，再启动服务
+*/
+
 func Start() {
   if !server.Net.Listen.On() {
     return
@@ -43,7 +47,7 @@ func runServer(s *serverConfig) {
 
   serverMux := http.NewServeMux()
 
-  for k,v := range api.AllHandlers() {
+  for k, v := range api.AllHandlers() {
     serverMux.HandleFunc(path.Join("/", s.RootUri, k), v)
   }
   // 404。 HandleFunc 不能对同一个pattern多次注册，所以先判断再注册
@@ -73,23 +77,23 @@ func runServer(s *serverConfig) {
         found = true
       }
 
-    //  if !found {
-    //    goto notFound
-    //  }
-    //
-    //  // 不把RootUri看着服务级别的权限控制，视为location的匹配
-    //  //if s.RootUri != "" {
-    //  //  p := r.URL.Path
-    //  //  if !path.IsAbs(p) {
-    //  //    p = "/" + p
-    //  //  }
-    //  //  if !strings.HasPrefix(p, s.RootUri) {
-    //  //    found = false
-    //  //    goto notFound
-    //  //  }
-    //  //}
-    //
-    //notFound:
+      //  if !found {
+      //    goto notFound
+      //  }
+      //
+      //  // 不把RootUri看着服务级别的权限控制，视为location的匹配
+      //  //if s.RootUri != "" {
+      //  //  p := r.URL.Path
+      //  //  if !path.IsAbs(p) {
+      //  //    p = "/" + p
+      //  //  }
+      //  //  if !strings.HasPrefix(p, s.RootUri) {
+      //  //    found = false
+      //  //    goto notFound
+      //  //  }
+      //  //}
+      //
+      //notFound:
       if !found {
         _, logger := log.WithCtx(r.Context())
         logger.Error(fmt.Sprintf("404 not found. HostName is not mattched. HostNames in config are %s, but url is %s",
@@ -144,4 +148,3 @@ func stripHostPort(h string) string {
   }
   return host
 }
-

@@ -68,9 +68,10 @@ Suite 一簇api，一个Suite中可以定义多个外部接口
 Http 的服务器逻辑，配置文件的生成及读取使用了[go-config](https://github.com/xpwu/go-config)。  
 RootUri: 表示此服务所有uri的前缀，与api中注册的uri一起组合成最后匹配的uri。  
 调用http.Start()即可启动http服务。
+* 注：必须先通过Add方法或者Register方法注册API，再启动服务
 
 ## fastcgi server
 fastcgi 服务器逻辑，配置文件的生成及读取使用了[go-config](https://github.com/xpwu/go-config)。  
 调用fastcgi.Start()即可启动fastcgi服务。  
-  
+* 注：必须先通过Add方法或者Register方法注册API，再启动服务
 
