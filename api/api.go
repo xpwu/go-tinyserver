@@ -72,7 +72,7 @@ func RegisterApiAndOpt(uri string, api API, opt func(ctx context.Context, write 
       id = reqid.RandomID()
     }
 
-    ctx, id = reqid.WithCtx(ctx)
+    ctx = reqid.NewContext(ctx, id)
     ctx, logger := log.WithCtx(ctx)
 
     request := &Request{
